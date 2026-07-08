@@ -6,7 +6,7 @@ import propertyRoutes from "../modules/property/property.route";
 import rentalRoutes from "../modules/rental/rental.route";
 import reviewRoutes from "../modules/review/review.route";
 import adminRoutes from "../modules/admin/admin.route";
-
+import landlordRoutes from "../modules/landlord/landlord.route";
 
 const router = express.Router();
 
@@ -21,4 +21,6 @@ router.use("/reviews", reviewRoutes);
 
 router.use("/rentals", rentalRoutes);
 router.use("/admin", adminRoutes);
+
+router.use("/landlord", landlordRoutes);
 export default router;
