@@ -23,7 +23,7 @@ enum RentalStatus {
 
 enum PaymentStatus {
   PENDING
-  COMPLETED
+  PAID
   FAILED
 }
 
@@ -33,120 +33,117 @@ enum PropertyStatus {
 }
 
 model User {
-  id          String   @id @default(cuid())
-  name        String
-  email       String   @unique
-  password    String
-  phone       String?
-  image       String?
-  role        Role     @default(TENANT)
-  isActive    Boolean  @default(true)
+  id       String  @id @default(cuid())
+  name     String
+  email    String  @unique
+  password String
+  phone    String?
+  image    String?
+  role     Role    @default(TENANT)
+  isActive Boolean @default(true)
 
-  properties  Property[]
-  rentals     RentalRequest[]
-  reviews     Review[]
+  properties Property[]
+  rentals    RentalRequest[]
+  reviews    Review[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Category {
-  id          String     @id @default(cuid())
-  name        String     @unique
+  id   String @id @default(cuid())
+  name String @unique
 
-  properties  Property[]
+  properties Property[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Property {
-  id            String   @id @default(cuid())
+  id String @id @default(cuid())
 
-  title         String
-  description   String
+  title       String
+  description String
 
-  address       String
-  city          String
+  address String
+  city    String
 
-  rent          Float
+  rent Float
 
-  bedrooms      Int
-  bathrooms     Int
+  bedrooms  Int
+  bathrooms Int
 
-  image         String
+  image String
 
-  status        PropertyStatus @default(AVAILABLE)
+  status PropertyStatus @default(AVAILABLE)
 
-  landlordId    String
-  landlord      User @relation(fields: [landlordId], references: [id])
+  landlordId String
+  landlord   User   @relation(fields: [landlordId], references: [id])
 
-  categoryId    String
-  category      Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 
-  rentals       RentalRequest[]
+  rentals RentalRequest[]
 
-  reviews       Review[]
+  reviews Review[]
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
 model RentalRequest {
+  id String @id @default(cuid())
 
-  id          String @id @default(cuid())
+  tenantId String
+  tenant   User   @relation(fields: [tenantId], references: [id])
 
-  tenantId    String
-  tenant      User @relation(fields: [tenantId], references: [id])
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
 
-  propertyId  String
-  property    Property @relation(fields: [propertyId], references: [id])
+  status RentalStatus @default(PENDING)
 
-  status      RentalStatus @default(PENDING)
+  moveInDate DateTime
 
-  moveInDate  DateTime
+  payment Payment?
 
-  payment     Payment?
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Payment {
+  id String @id @default(cuid())
 
-  id               String @id @default(cuid())
+  rentalRequestId String        @unique
+  rentalRequest   RentalRequest @relation(fields: [rentalRequestId], references: [id])
 
-  rentalRequestId  String @unique
+  transactionId String @unique
 
- rentalRequest RentalRequest @relation(fields: [rentalRequestId], references: [id])
+  amount Float
 
-  transactionId    String @unique
+  provider String
 
-  amount           Float
+  paymentStatus PaymentStatus @default(PENDING)
 
-  provider         String
+  paidAt DateTime?
 
-  status           PaymentStatus @default(PENDING)
-
-  paidAt           DateTime?
-
-  createdAt        DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Review {
+  id String @id @default(cuid())
 
-  id          String @id @default(cuid())
+  rating Int
 
-  rating      Int
+  comment String
 
-  comment     String
+  propertyId String
 
-  propertyId  String
+  property Property @relation(fields: [propertyId], references: [id])
 
-  property    Property @relation(fields: [propertyId], references: [id])
+  tenantId String
 
-  tenantId    String
+  tenant User @relation(fields: [tenantId], references: [id])
 
-  tenant      User @relation(fields: [tenantId], references: [id])
-
-  createdAt   DateTime @default(now())
+  createdAt DateTime @default(now())
 }

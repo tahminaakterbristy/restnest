@@ -8,20 +8,16 @@ import reviewRoutes from "../modules/review/review.route";
 import adminRoutes from "../modules/admin/admin.route";
 import landlordRoutes from "../modules/landlord/landlord.route";
 import paymentRoutes from "../modules/payment/payment.route";
+
 const router = express.Router();
 
 router.use("/auth", authRoutes);
-
 router.use("/categories", categoryRoutes);
-
 router.use("/properties", propertyRoutes);
-router.use("/properties", propertyRoutes);
-
 router.use("/reviews", reviewRoutes);
-
 router.use("/rentals", rentalRoutes);
 router.use("/admin", adminRoutes);
-
 router.use("/landlord", landlordRoutes);
-router.use("/payments",paymentRoutes);
+router.use("/payments", paymentRoutes);
+
 export default router;

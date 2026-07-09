@@ -57,9 +57,22 @@ const updateAvailability = catchAsync(async (req, res) => {
   });
 });
 
+
+const getDashboardStats = catchAsync(async (req, res) => {
+  const result = await LandlordService.getDashboardStats(req.user.id);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Landlord dashboard retrieved successfully",
+    data: result,
+  });
+});
+
 export const LandlordController = {
   getMyProperties,
   getRentalRequests,
   updateRentalStatus,
   updateAvailability,
+   getDashboardStats,
 };

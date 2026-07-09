@@ -1,4 +1,5 @@
 import prisma from "../../config/prisma";
+import AppError from "../../errors/AppError";
 
 const createReview = async (
   tenantId: string,
@@ -8,6 +9,21 @@ const createReview = async (
     comment: string;
   }
 ) => {
+  const completedRental = await prisma.rentalRequest.findFirst({
+    where: {
+      tenantId,
+      propertyId: payload.propertyId,
+      status: "COMPLETED",
+    },
+  });
+
+  if (!completedRental) {
+    throw new AppError(
+      403,
+      "You can review only after completing your rental."
+    );
+  }
+
   return prisma.review.create({
     data: {
       tenantId,

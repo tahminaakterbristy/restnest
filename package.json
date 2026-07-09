@@ -10,7 +10,11 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:generate": "prisma generate",
     "prisma:studio": "prisma studio"
+    
   },
+  "prisma": {
+   "seed":"ts-node prisma/seed.ts"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
