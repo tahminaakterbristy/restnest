@@ -2,12 +2,13 @@ import express from "express";
 import auth from "../../middlewares/auth";
 import { LandlordController } from "./landlord.controller";
 
+
 const router = express.Router();
 
 router.get(
   "/properties",
   auth("LANDLORD"),
-  LandlordController.getMyProperties
+  LandlordController .getMyProperties
 );
 
 router.get(
