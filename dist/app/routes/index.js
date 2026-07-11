@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const auth_route_1 = __importDefault(require("../modules/auth/auth.route"));
+const category_route_1 = __importDefault(require("../modules/category/category.route"));
+const property_route_1 = __importDefault(require("../modules/property/property.route"));
+const rental_route_1 = __importDefault(require("../modules/rental/rental.route"));
+const review_route_1 = __importDefault(require("../modules/review/review.route"));
+const admin_route_1 = __importDefault(require("../modules/admin/admin.route"));
+const landlord_route_1 = __importDefault(require("../modules/landlord/landlord.route"));
+const payment_route_1 = __importDefault(require("../modules/payment/payment.route"));
+const router = express_1.default.Router();
+router.use("/auth", auth_route_1.default);
+router.use("/categories", category_route_1.default);
+router.use("/properties", property_route_1.default);
+router.use("/reviews", review_route_1.default);
+router.use("/rentals", rental_route_1.default);
+router.use("/admin", admin_route_1.default);
+router.use("/landlord", landlord_route_1.default);
+router.use("/payments", payment_route_1.default);
+exports.default = router;
