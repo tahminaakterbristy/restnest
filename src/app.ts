@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 import routes from "./app/routes";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./config/swagger";
+import swaggerDocument from "./app/config/swagger";
 import globalErrorHandler from "./app/errors/globalErrorHandler";
 
 dotenv.config();
